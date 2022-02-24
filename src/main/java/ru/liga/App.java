@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class App {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String command = "rate EUR week";//scanner.nextLine();
+        String command = scanner.nextLine();
 
         final String regex = "^(rate )([A-Z]+) (tomorrow|week)$";
         final Pattern pattern = Pattern.compile(regex, Pattern.CANON_EQ);
