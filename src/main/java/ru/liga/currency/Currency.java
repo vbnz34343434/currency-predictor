@@ -1,6 +1,6 @@
 package ru.liga.currency;
 
-public class Currency {
+public abstract class Currency {
     private String name;
     private String rateFileName;
 
@@ -22,9 +22,9 @@ public class Currency {
 
     @Override
     public String toString() {
-        return "Currency{" +
+        return "Currency {" +
                 "name='" + name + '\'' +
-                ", historyPath='" + rateFileName + '\'' +
+                ", rateFileName='" + rateFileName + '\'' +
                 '}';
     }
 }
