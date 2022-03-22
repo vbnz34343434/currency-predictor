@@ -5,7 +5,7 @@ import org.apache.commons.cli.CommandLine;
 import ru.liga.model.Rate;
 import ru.liga.model.currency.Currency;
 import ru.liga.model.currency.CurrencyFactory;
-import ru.liga.service.PredictionServiceImpl;
+import ru.liga.service.PredictionService;
 import ru.liga.service.common.algoritm.AbstractAlgorithm;
 import ru.liga.service.common.algoritm.AlgorithmFactory;
 import ru.liga.util.ChartDrawer;
@@ -24,7 +24,7 @@ public class RateCommand implements Command {
     private final String ratePeriod;
     private final CurrencyFactory currencyFactory;
     private final List<Currency> currencyList;
-    private final PredictionServiceImpl predictionServiceImpl;
+    private final PredictionService predictionService;
     private final String output;
     private final ChartDrawer chartDrawer;
     private final AbstractAlgorithm algorithm;
@@ -35,7 +35,7 @@ public class RateCommand implements Command {
         this.currencyList = parseCurrenciesStringToList(cmd.getArgList().get(0));
         this.algorithm = new AlgorithmFactory().getAlgorithm(cmd.getOptionValue("alg"));
         this.output = (cmd.hasOption("output") ? cmd.getOptionValue("output") : "list");
-        this.predictionServiceImpl = new PredictionServiceImpl();
+        this.predictionService = new PredictionService();
         this.chartDrawer = new ChartDrawer();
 
 
@@ -58,13 +58,13 @@ public class RateCommand implements Command {
     }
 
     @Override
-    public Object execute() {
-        Map<Currency, List<Rate>> rates = predictionServiceImpl.predict(currencyList, algorithm, ratePeriod, predictionDate);
+    public CommandResult execute() {
+        Map<Currency, List<Rate>> rates = predictionService.predict(currencyList, algorithm, ratePeriod, predictionDate);
 
         if (output.equals("graph")) {
-            return currencyRatesToOutputStream(rates);
+            return new CommandResult(currencyRatesToOutputStream(rates));
         } else {
-            return currencyRatesToString(rates);
+            return new CommandResult(currencyRatesToString(rates));
         }
     }
 

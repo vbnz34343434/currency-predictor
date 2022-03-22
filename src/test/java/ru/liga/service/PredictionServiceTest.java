@@ -17,8 +17,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class PredictionServiceImplTest {
-    PredictionService service = new PredictionServiceImpl();
+public class PredictionServiceTest {
+    PredictionService service = new PredictionService();
     RatesRepository repository = mock(RatesRepositoryCacheProxy.class);
 
     @Test

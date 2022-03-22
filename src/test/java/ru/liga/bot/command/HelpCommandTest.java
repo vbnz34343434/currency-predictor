@@ -28,6 +28,6 @@ public class HelpCommandTest {
 
     @Test
     public void whenHelpCommandExecutedThenReturnedCorrectTextMessage() {
-        assertEquals(HELP_COMMAND_MESSAGE, command.execute());
+        assertEquals(HELP_COMMAND_MESSAGE, command.execute().getText());
     }
 }

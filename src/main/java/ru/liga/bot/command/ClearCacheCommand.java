@@ -1,12 +1,10 @@
 package ru.liga.bot.command;
 
-import lombok.Getter;
 import ru.liga.repository.RatesRepositoryCacheProxy;
 
 public class ClearCacheCommand implements Command {
     private final RatesRepositoryCacheProxy repository;
 
-    @Getter
     private final String CLEAR_CACHE_COMMAND_MESSAGE = "dataset cache successfully cleared";
 
     public ClearCacheCommand() {
@@ -14,8 +12,8 @@ public class ClearCacheCommand implements Command {
     }
 
     @Override
-    public String execute() {
+    public CommandResult execute() {
         repository.clearCache();
-        return CLEAR_CACHE_COMMAND_MESSAGE;
+        return new CommandResult(CLEAR_CACHE_COMMAND_MESSAGE);
     }
 }

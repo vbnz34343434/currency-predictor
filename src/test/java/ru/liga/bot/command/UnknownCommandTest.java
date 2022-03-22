@@ -9,6 +9,6 @@ public class UnknownCommandTest {
 
     @Test
     public void whenUnknownCommandExecutedThenSentCorrectTextMessage() {
-        assertEquals("Unknown command. Please type help to get available commands", command.execute());
+        assertEquals("Unknown command. Please type help to get available commands", command.execute().getText());
     }
 }

@@ -5,10 +5,10 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.liga.bot.command.Command;
 import ru.liga.bot.command.CommandFactory;
+import ru.liga.bot.command.CommandResult;
 import ru.liga.service.SendBotMessageService;
 import ru.liga.service.SendTelegramBotMessageService;
 
-import java.io.OutputStream;
 import java.util.Map;
 
 @Slf4j
@@ -41,17 +41,14 @@ public class CurrencyPredictorBot extends TelegramLongPollingBot {
 
             try {
                 Command command = commandFactory.retrieveCommand(update.getMessage().getText());
-                Object result = command.execute();
+                CommandResult result = command.execute();
 
-                //ToDo: реализовать класс CommandResult/CommandAnswer,
-                // который будет возвращаться в результате выполнения команды
-                // и из него уже понимать какой ответ возвращать в бота
-                if (result instanceof OutputStream) {
-                    sendBotMessageService.sendPhotoMessage(getChatId(update), (OutputStream) result);
-                } else if (result instanceof String) {
-                    sendBotMessageService.sendTextMessage(getChatId(update), (String) result);
-                } else {
-                    throw new RuntimeException("Incompatible result type to send result message");
+                if (result.getText() != null) {
+                    sendBotMessageService.sendTextMessage(getChatId(update), result.getText());
+                }
+
+                if (result.getStream() != null) {
+                    sendBotMessageService.sendPhotoMessage(getChatId(update), result.getStream());
                 }
 
             } catch (Exception e) {
